@@ -29,7 +29,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
 }
@@ -46,10 +45,10 @@
 }
 
 .App-title{
-font-size: 7vh;
+font-size: 5vh;
 }
 .App-description{
-  font-size: 4vh;
+  font-size: 1.5vh;
   margin-bottom: 2vh;
 }
 
@@ -71,6 +70,7 @@ font-size: 7vh;
 .App-form{
   display: flex;
   align-items: center;
+  margin-bottom: 1vh;
 }
 
 .App-form-description{

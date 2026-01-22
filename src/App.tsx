@@ -140,7 +140,7 @@ function App() {
                 </div>
               </div>
               <div className='App-form-sociable'>
-                <div className='App-description'>年齢別に社交的だったか教えてね！<div>数値が高いほど社交的だよ</div></div>
+                <div className='App-description'>↓年齢別に社交的だったか教えてね！↓<div>数値が高いほど社交的だよ</div></div>
                 <div className="App-form">
                   <div className='App-form-description'>中学時代</div>
                   <input
