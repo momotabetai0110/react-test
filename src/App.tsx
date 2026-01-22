@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './logo.svg';
+//import logo from './logo.svg';
 import './App.css';
 import { useState } from "react";
 import { useEffect } from "react";
@@ -40,8 +40,8 @@ function App() {
   const [midSociable, setMidSociable] = useState("5");
   const [lateSociable, setLateSociable] = useState("5");
   const [result, setResult] = useState("");
-  const [isResult, setIsResult] = useState(false);
   const [isOnline, setIsOnline] = useState<boolean>(false)
+  const [viewStatus, setViewStatus] = useState(1) //1:入力フォーム 2:診断結果 3:ローディング
 
   const payload = {
     gender,
@@ -52,9 +52,10 @@ function App() {
     lateSociable: Number(lateSociable)
   }
 
+  //入力フォーム送信
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    setViewStatus(3)
     if (isOnline) {
       const response = await fetch("http://localhost:5156/api/face", {
         method: "POST",
@@ -68,22 +69,19 @@ function App() {
       setResult(result.response)
     } else {
       let message = "";
-      const sociableSum =  Number(earlySociable) + Number(midSociable) +  Number(lateSociable)
-      if (sociableSum >= 15)
-        {
-            message = "明るいんですね！";
-        }
-        else if (sociableSum >= 10)
-        {
-            message = "暗いんですね!";
-        }
-        else
-        {
-            message = "きもw";
-        }
-        setResult(message)
+      const sociableSum = Number(earlySociable) + Number(midSociable) + Number(lateSociable)
+      if (sociableSum >= 15) {
+        message = "明るいんですね！";
+      }
+      else if (sociableSum >= 10) {
+        message = "暗いんですね!";
+      }
+      else {
+        message = "きもw";
+      }
+      setResult(message)
     }
-    setIsResult(true)
+    setViewStatus(2)
   };
 
   const checkOnline = () => {
@@ -102,11 +100,11 @@ function App() {
           )}
 
         <div className='App-title'>高性能性格診断！</div>
+      </header>
 
-
-
-        {!isResult && (
-          <form>
+      <div className='App-body'>
+        {viewStatus === 1 && (
+          <form onSubmit={handleSubmit}>
             <div className='App-form-list'>
 
               <div className='App-form-data'>
@@ -175,16 +173,21 @@ function App() {
                   <span>{lateSociable}</span>
                 </div>
               </div>
-              <button onClick={handleSubmit}>診断スタート!!</button>
+              <div><button type="submit">診断スタート!!</button></div>
 
             </div>
           </form>
         )}
 
-        {isResult && (
+        {viewStatus === 2 && (
           <div>{result}</div>
         )}
-      </header>
+
+        {viewStatus === 3 && (
+          <div>ローディング中...</div>
+        )}
+      </div>
+
     </div>
   )
 }
